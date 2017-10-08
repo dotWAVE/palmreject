@@ -1,5 +1,5 @@
 #!/bin/bash
-
+. /home/devian/.bashrc
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -14,8 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # configuration. run "xinput list" to see ids for your devices.
-touchscreen_device_name='FTSC'
-stylus_device_name='Wacom'
+touchscreen_device_name='maXTouch'
 stylus_device_specifier='Pen'
 disable_timeout=10
 
@@ -23,8 +22,21 @@ disable_timeout=10
 
 # find out device ids from xinput:
 touchscreen_device=`xinput --list | grep $touchscreen_device_name | grep -Po '(?<=id\=)[0-9]+'`
+echo Touchscreen ID'='$touchscreen_device
+stylus_device=`xinput --list | grep $stylus_device_specifier | grep -Po '(?<=id\=)[0-9]+'`
 
-stylus_device=`xinput --list | grep $stylus_device_name | grep $stylus_device_specifier | head -n 1 | grep -Po '(?<=id\=)[0-9]+'`
+#Deprecated from original script
+##stylus_device=`xinput --list | grep $stylus_device_name | grep $stylus_device_specifier | head -n 1 | grep -Po '(?<=id\=)[0-9]+'`
+
+#prelimenary loop - some stylus does not appear until used
+while [ -z "$stylus_device" ]
+do
+  echo Pen not found
+  stylus_device=`xinput --list | grep $stylus_device_specifier | grep -Po '(?<=id\=)[0-9]+'`
+  sleep 2
+done
+
+echo Stylus ID'='$stylus_device
 
 last_state=-1
 timer=0
@@ -52,4 +64,3 @@ do
   last_state=$state
   sleep 0.1
 done
-

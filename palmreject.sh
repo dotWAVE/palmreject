@@ -26,7 +26,7 @@ echo Touchscreen ID'='$touchscreen_device
 stylus_device=`xinput --list | grep $stylus_device_specifier | grep -Po '(?<=id\=)[0-9]+'`
 
 #Deprecated from original script
-##stylus_device=`xinput --list | grep $stylus_device_name | grep $stylus_device_specifier | head -n 1 | grep -Po '(?<=id\=)[0-9]+'`
+#stylus_device=`xinput --list | grep $stylus_device_name | grep $stylus_device_specifier | head -n 1 | grep -Po '(?<=id\=)[0-9]+'`
 
 #prelimenary loop - some stylus does not appear until used
 while [ -z "$stylus_device" ]
